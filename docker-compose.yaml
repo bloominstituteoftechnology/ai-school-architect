@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  deployment:
+    build:
+      context: .
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
