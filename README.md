@@ -36,10 +36,19 @@ This script includes the following key components:
 This script sets up a FastAPI server to expose the agent workflow as an API. It utilizes LangServe to create and run the server.
 
 ```python
-from langserve import create_app
-from main import graph
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from langserve import add_routes
+from app.agent_supervisor import graph
 
-app = create_app(graph)
+app = FastAPI()
+
+@app.get("/")
+async def redirect_root_to_docs():
+    return RedirectResponse("/docs")
+
+# Edit this to add the chain you want to add
+add_routes(app, graph, enable_feedback_endpoint=True)
 
 if __name__ == "__main__":
     import uvicorn
