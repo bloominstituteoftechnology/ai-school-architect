@@ -1,9 +1,60 @@
-# ai-school-architect
+# AI School Architect
 
-## Calling All Cohort 1 Students!
+## Overview
+In this project, we developed AI School Architect to orchestrate AI agents performing various tasks such as research, code review, testing, and coding. This setup enhances productivity by delegating specific tasks to specialized agents, streamlining workflows, and ensuring accuracy and efficiency.
 
-We've got something special in the works! This project is set to go live right after the guided project wraps up. 
+## Now It's Your Turn!
+Embrace your creativity and personalize this project to craft a solution that uniquely addresses the challenges and inefficiencies you face in your own educational or professional environment. After seeing what our AI agents can do, it’s time for you to take the reins. Use the foundation we’ve built and apply it to a challenge you face in your own context. Here’s how you can get started:
 
-For now, be sure to star this repository and keep an eye out for updates. We'll see you when it's time to dive in!
+## Minimum Requirements
+- **Custom Agent Creation:** Develop new custom agents to match your specific workflow needs. This could include automating repetitive tasks, integrating with specific APIs, or creating specialized commands that you frequently use.
 
----
+## Stretch Goals
+- **Advanced Task Automation:** Enhance the agents to perform more complex tasks such as data analysis, report generation, and project management.
+- **Context-Aware Assistance:** Develop features that enable the agents to understand the context of tasks better, offering more accurate suggestions and task executions based on the current project structure and standards.
+- **Collaboration Features:** Implement tools that facilitate better collaboration among team members, such as task assignment automation, integration with project management tools, and real-time collaboration features.
+- **Continuous Improvement:** Integrate the agents with feedback loops to learn from their actions and improve their performance over time, providing more personalized and relevant assistance as you continue to use them.
+
+## Privacy and Submission Guidelines
+- **Submission Requirements:** Please submit a link to your public repo with your implementation or a loom video showcasing your work on the BloomTech AI Platform.
+- **Sensitive Information:** If your implementation involves sensitive information, you are not required to submit a public repository. Instead, a detailed review of your project through a Loom video is acceptable, where you can demonstrate the functionality and discuss the technologies used without exposing confidential data.
+
+## Project Structure
+
+- `agent_supervisor.py`: Contains the configuration and setup for AI agents and the workflow.
+- `server.py`: Wraps the workflow graph in a FastAPI server using LangServe.
+
+### `agent_supervisor.py`
+
+This script includes the following key components:
+
+- **Agent Configuration**: Defines the tools and prompts for various agents, including researchers, coders, reviewers, and QA testers.
+- **Workflow Definition**: Uses `StateGraph` to define the workflow and how agents interact with each other and the supervisor.
+
+### `server.py`
+
+This script sets up a FastAPI server to expose the agent workflow as an API. It utilizes LangServe to create and run the server.
+
+```python
+from langserve import create_app
+from main import graph
+
+app = create_app(graph)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+```
+
+## Contributing
+
+We welcome contributions to improve AI School Architect. If you have any suggestions or encounter issues, please open an issue or submit a pull request.
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes and push to your branch.
+4. Open a pull request with a detailed description of your changes.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
