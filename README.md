@@ -46,15 +46,6 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-## Contributing
-
-We welcome contributions to improve AI School Architect. If you have any suggestions or encounter issues, please open an issue or submit a pull request.
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes and push to your branch.
-4. Open a pull request with a detailed description of your changes.
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
