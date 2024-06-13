@@ -21,7 +21,7 @@ tavily_tool = TavilySearchResults(max_results=5)
 python_repl_tool = PythonREPLTool()
 
 # System prompt for the supervisor agent
-members = ["Researcher", "Coder", "Reviewer", "QA Tester"]
+members = ["Researcher", "Coder", "Reviewer", "QATester"]  # Fixed the names to match the pattern
 system_prompt = (
     "You are a supervisor tasked with managing a conversation between the"
     " following workers:  {members}. Given the following user request,"
@@ -118,7 +118,7 @@ test_agent = create_agent(
     [python_repl_tool],
     "You may generate safe python code to test functions and classes using unittest or pytest.",
 )
-test_node = functools.partial(agent_node, agent=test_agent, name="QA Tester")
+test_node = functools.partial(agent_node, agent=test_agent, name="QATester")  # Fixed the name
 
 # NOTE: THIS PERFORMS ARBITRARY CODE EXECUTION. PROCEED WITH CAUTION
 code_agent = create_agent(
@@ -133,7 +133,7 @@ workflow = StateGraph(AgentState)
 workflow.add_node("Reviewer", review_node)
 workflow.add_node("Researcher", research_node)
 workflow.add_node("Coder", code_node)
-workflow.add_node("QA Tester", test_node)
+workflow.add_node("QATester", test_node)  # Fixed the name
 workflow.add_node("supervisor", supervisor_chain)
 
 # Adding edges to the workflow
