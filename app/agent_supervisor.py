@@ -23,11 +23,12 @@ python_repl_tool = PythonREPLTool()
 # System prompt for the supervisor agent
 members = ["Researcher", "Coder", "Reviewer", "QATester"]  # Fixed the names to match the pattern
 system_prompt = (
-    "You are a supervisor tasked with managing a conversation between the"
+    "You are a supervisor tasked with managing code between the"
     " following workers:  {members}. Given the following user request,"
     " respond with the worker to act next. Each worker will perform a"
     " task and respond with their results and status. When finished,"
-    " respond with FINISH."
+    " respond with FINISH. Assess the results and status from each"
+    " worker. Make sure to complete the task in a timely manner."
 )
 
 # Options for the supervisor to choose from
@@ -59,7 +60,7 @@ prompt = ChatPromptTemplate.from_messages(
         MessagesPlaceholder(variable_name="messages"),
         (
             "system",
-            "Given the conversation above, who should act next?"
+            "Given the results and conversation above, who should act next?"
             " Or should we FINISH? Select one of: {options}",
         ),
     ]
@@ -106,17 +107,17 @@ def agent_node(state, agent, name):
     return {"messages": [HumanMessage(content=result["output"], name=name)]}
 
 # Creating agents and their corresponding nodes
-research_agent = create_agent(llm, [tavily_tool], "You are a web researcher.")
+research_agent = create_agent(llm, [tavily_tool], "You are a web researcher. You search the internet to figure out how to code something.")
 research_node = functools.partial(agent_node, agent=research_agent, name="Researcher")
 
-review_agent = create_agent(llm, [tavily_tool], "You are a senior developer. You excel at code reviews.")
+review_agent = create_agent(llm, [tavily_tool], "You are a senior developer. You excel at code reviews. You just give back a list of suggestions to make the code better.")
 review_node = functools.partial(agent_node, agent=review_agent, name="Reviewer")
 
 # NOTE: THIS PERFORMS ARBITRARY CODE EXECUTION. PROCEED WITH CAUTION
 test_agent = create_agent(
     llm,
     [python_repl_tool],
-    "You may generate safe python code to test functions and classes using unittest or pytest.",
+    "You may generate safe python code to test functions and classes using unittest or pytest. You run the code. Return only if the code is working or not.",
 )
 test_node = functools.partial(agent_node, agent=test_agent, name="QATester")  # Fixed the name
 
@@ -124,7 +125,7 @@ test_node = functools.partial(agent_node, agent=test_agent, name="QATester")  # 
 code_agent = create_agent(
     llm,
     [python_repl_tool],
-    "You may generate safe python code to analyze data with pandas and generate charts using matplotlib.",
+    "You may generate safe python code to analyze data with pandas and generate charts using matplotlib. Return only the code ready to be tested.",
 )
 code_node = functools.partial(agent_node, agent=code_agent, name="Coder")
 
