@@ -10,6 +10,11 @@ async def redirect_root_to_docs():
 
 
 # Add routes for the graph
+add_routes(
+    app,
+    graph,
+    enable_feedback_endpoint=True
+)
 
 if __name__ == "__main__":
     import uvicorn
