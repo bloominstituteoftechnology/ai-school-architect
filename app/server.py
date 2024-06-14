@@ -2,6 +2,8 @@ from fastapi.responses import RedirectResponse
 from langserve import add_routes
 from app.agent_supervisor import graph
 
+from fastapi import FastAPI
+
 app = FastAPI()
 
 @app.get("/")
